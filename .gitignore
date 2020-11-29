@@ -1,6 +1,8 @@
 /.metadata/
 /.recommenders/
 /mscloud/
-/.idea/
+/.idea/**
 /.settings/
 /.RemoteSystemsTempFiles/
+.settings
+.idea

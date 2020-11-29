@@ -1,0 +1,30 @@
+server:
+  port: 3344
+  
+spring:
+  cloud:
+    config: 
+      server: 
+        git:
+          uri: https://github.com/oldboy-java/mscloud-config.git 
+  application:
+    name: config-service  
+
+           
+eureka: 
+  client: 
+    service-url:  
+       defaultZone: http://eureka7001.com:7001/eureka   #, http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+      
+  instance:
+    hostname: config3344.com 
+    instance-id: config-service-3344                  
+    prefer-ip-address: true                          
+    
+
+info:
+  app.name: config-service
+  company.name: www.tk.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$    
+  
