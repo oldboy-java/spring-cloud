@@ -68,5 +68,17 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-hystrix</artifactId>
 		</dependency>
+
+	<!--  <dependency>
+	  <groupId>com.squareup.okhttp3</groupId>
+	  <artifactId>okhttp</artifactId>
+	  </dependency>-->
+
+	  <dependency>
+		  <groupId>com.liuli.tk</groupId>
+		  <artifactId>rest-spring-boot-starter</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+	  </dependency>
+
   </dependencies>
 </project>

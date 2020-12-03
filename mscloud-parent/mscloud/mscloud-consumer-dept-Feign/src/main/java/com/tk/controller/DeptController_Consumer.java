@@ -1,15 +1,9 @@
 package com.tk.controller;
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.ThreadPoolExecutor;
-
+import com.google.common.collect.Lists;
+import com.tk.entity.Dept;
+import com.tk.service.DeptFeignClientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.tk.entity.Dept;
-import com.tk.service.DeptFeignClientService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 @Slf4j
@@ -58,7 +49,7 @@ public class DeptController_Consumer {
 //		return deptFeignClientService.get(id);
 		
 		// 使用RestTemplate请求，会执行拦截器UserContextInterceptor，给请求增加请求头
-		
+
 		ResponseEntity<Dept> responseEntity = restTemplate.exchange("http://mscloud-provider-dept-hystrix-8001/dept/get/{id}", HttpMethod.GET, null, Dept.class, id);
 		return responseEntity.getBody();
 	}
@@ -107,11 +98,11 @@ public class DeptController_Consumer {
 	@GetMapping("/discovery")
 	public String discovery() {
 		List<String> services = discoveryClient.getServices();
-		log.info("所有服务列表：{}", JSON.toJSON(services));
+//		log.info("所有服务列表：{}", JSON.toJSON(services));
 
 		for (String service : services) {
 			List<ServiceInstance> instances = discoveryClient.getInstances(service);
-			log.info("{}的服务实例列表：{}", service, JSON.toJSON(instances));
+//			log.info("{}的服务实例列表：{}", service, JSON.toJSON(instances));
 		}
 		return "SUCCESS";
 	}

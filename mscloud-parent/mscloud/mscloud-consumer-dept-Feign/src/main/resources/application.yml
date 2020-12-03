@@ -62,3 +62,10 @@ hystrix:
          isolation: 
           thread: 
             timeoutInMilliseconds: 120000
+
+tk:
+  rest-template:
+    type: loadBalanced
+    client-http-request-factory:
+      type: okhttp3
+

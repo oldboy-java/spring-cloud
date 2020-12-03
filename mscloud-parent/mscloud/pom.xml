@@ -10,14 +10,14 @@
 
 	<modules>
 		<module>mscloud-api</module>
-		<module>mscloud-provider-dept-8003</module>
+		<!--<module>mscloud-provider-dept-8003</module>-->
 		<module>mscloud-provider-dept-hystrix-8001</module>
 		<module>mscloud-eureka-7001</module>
 		<module>mscloud-consumer-dept-Feign</module>
 		<module>mscloud-config-3344</module>
 		<module>zuulsvr</module>
-		<module>oauth2-demo</module>
-		<module>organization-service</module>
+		<!--<module>oauth2-demo</module>
+		<module>organization-service</module>-->
 	</modules>
 
 
@@ -34,5 +34,36 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+
+	<build>
+		   <!-- 在父工程中定义插件行为-->
+			<pluginManagement>
+					<plugins>
+							<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-compiler-plugin</artifactId>
+								 <!-- 配置编译使用的jdk版本-->
+								<configuration>
+									<source>1.8</source>
+									<target>1.8</target>
+								</configuration>
+							</plugin>
+
+
+							<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-resources-plugin</artifactId>
+
+								<!-- 配置资源文件编码-->
+								<configuration>
+									<encoding>utf-8</encoding>
+								</configuration>
+							</plugin>
+					</plugins>
+			</pluginManagement>
+
+
+	</build>
 
 </project>
