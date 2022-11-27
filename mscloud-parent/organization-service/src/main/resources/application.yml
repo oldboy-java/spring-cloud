@@ -1,0 +1,22 @@
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8080/oauth/check_token
+      userInfoUri: http://localhost:8080/auth/user  #获取不到用户信息TODO
+      prefer-token-info: true  #是否优先使用token-info-uri
+
+
+      ##Null Client ID or Client Secret detected. Endpoint that requires authentication will reject request with 401 error.
+
+#Setting the logging levels for the service
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+
+
+
+
+

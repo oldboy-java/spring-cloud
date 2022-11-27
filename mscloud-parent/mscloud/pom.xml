@@ -9,15 +9,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<modules>
-		<module>mscloud-api</module>
+<!--		<module>mscloud-api</module>-->
 		<!--<module>mscloud-provider-dept-8003</module>-->
-		<module>mscloud-provider-dept-hystrix-8001</module>
-		<module>mscloud-eureka-7001</module>
-		<module>mscloud-consumer-dept-Feign</module>
-		<module>mscloud-config-3344</module>
-		<module>zuulsvr</module>
-		<!--<module>oauth2-demo</module>
-		<module>organization-service</module>-->
+<!--		<module>mscloud-provider-dept-hystrix-8001</module>-->
+<!--		<module>mscloud-eureka-7001</module>-->
+<!--		<module>mscloud-consumer-dept-Feign</module>-->
+<!--		<module>mscloud-config-3344</module>-->
 	</modules>
 
 
