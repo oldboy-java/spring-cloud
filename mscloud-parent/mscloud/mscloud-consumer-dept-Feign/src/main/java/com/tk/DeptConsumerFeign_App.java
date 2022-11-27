@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients(basePackages="com.tk") //启用FeignClient
-@ComponentScan(value="com.tk")
 @EnableDiscoveryClient
 @EnableHystrix
 public class DeptConsumerFeign_App
