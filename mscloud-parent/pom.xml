@@ -4,12 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
-    </parent>
-
     <groupId>com.tk</groupId>
     <artifactId>mscloud-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -27,12 +21,31 @@
         <spring-boot.version>2.3.5.RELEASE</spring-boot.version>
         <mysql-connector-java.version>5.1.41</mysql-connector-java.version>
         <druid.version>1.1.23</druid.version>
+        <mybatis-spring-boot-starter.verion>1.3.2</mybatis-spring-boot-starter.verion>
+        <mybatis-plus-boot-starter.version>2.3.2</mybatis-plus-boot-starter.version>
+        <logback.version>1.2.3</logback.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger-ui.vesion>2.9.2</springfox-swagger-ui.vesion>
+        <guava.version>20.0</guava.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <okhttp.version>3.6.0</okhttp.version>
+        <spring-security-jwt.version>1.1.1.RELEASE</spring-security-jwt.version>
+        <spring-security-oauth2-autoconfigure.version>2.2.6.RELEASE</spring-security-oauth2-autoconfigure.version>
     </properties>
 
 
     <dependencyManagement>
 
         <dependencies>
+            <!-- 定义spring-boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- 定义spring-cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -42,36 +55,42 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- mysql-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
             </dependency>
 
+            <!-- druid连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.1.9</version>
+                <version>${druid.version}</version>
             </dependency>
 
+            <!-- mybatis-spring-->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>1.3.2</version>
+                <version>${mybatis-spring-boot-starter.verion}</version>
             </dependency>
 
+            <!-- mybatis-plus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>2.3.2</version>
+                <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
 
+            <!--logback -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
-                <version>1.2.3</version>
+                <version>${logback.version}</version>
             </dependency>
 
+            <!--junit -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -79,6 +98,7 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- log4j-->
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
@@ -89,71 +109,74 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>20.0</version>
+                <version>${guava.version}</version>
             </dependency>
 
             <!-- springfox-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
-                <version>2.9.2</version>
+                <version>${springfox-swagger2.version}</version>
             </dependency>
 
+            <!-- springfox-swagger-ui -->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
-                <version>2.9.2</version>
+                <version>${springfox-swagger-ui.vesion}</version>
             </dependency>
 
+            <!-- fastjson-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.54</version>
+                <version>${fastjson.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.0</version>
-            </dependency>
-
+            <!-- okhttp-->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
-                <version>3.6.0</version>
+                <version>${okhttp.version}</version>
             </dependency>
 
+            <!--spring-security-jwt -->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-jwt</artifactId>
-                <version>1.1.1.RELEASE</version>
+                <version>${spring-security-jwt.version}</version>
             </dependency>
 
 
-            <!--注意 这个版本 与-->
+            <!--注意 这个版本与Springcloud版本一致-->
             <dependency>
                 <groupId>org.springframework.security.oauth.boot</groupId>
                 <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>2.2.6.RELEASE</version>
+                <version>${spring-security-oauth2-autoconfigure.version}</version>
             </dependency>
 
+            <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
 
     <modules>
         <!--<module>authentication-service</module>-->
-        <module>confsvr</module>
+<!--        <module>confsvr</module>-->
         <!--<module>eurekasvr</module>-->
         <!--<module>licensing-service</module>-->
         <!--	<module>organization-service</module>
             <module>zuulsvr</module-->
+        <module>mscloud-api</module>
+        <module>mscloud-provider-dept-hystrix-8001</module>
+        <module>mscloud-eureka-7001</module>
+        <module>mscloud-consumer-dept-Feign</module>
+        <module>mscloud-config-3344</module>
     </modules>
 
     <build>
@@ -162,6 +185,34 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <!-- 配置编译使用的jdk版本-->
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+
+                    <!-- 配置资源文件编码-->
+                    <configuration>
+                        <encoding>utf-8</encoding>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
