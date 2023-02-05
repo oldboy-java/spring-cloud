@@ -31,7 +31,7 @@
 ####
 
 server:
-   port: 8888
+   port: 18888
 spring:
   profiles:
     active: native
@@ -39,18 +39,10 @@ spring:
      config:
        server:
            native:
-#              searchLocations: file://<chapter 3>/confsvr/src/main/resources/config/licensingservice,
-#                               file://<chapter 3>confsvr/src/main/resources/config/organizationservice
-              searchLocations: classpath:config/licensingservice,classpath:config/licensingservice,classpath:config/authenticationservice,classpath:config/organizationservice
-#
+              searchLocations: classpath:config/licensingservice,classpath:config/licensingservice,classpath:config/authenticationservice,classpath:config/organizationservice,,classpath:config/zuulservice
 
-#Setting logging levels
-logging:
-  level:
-    com.netflix: WARN
-    org.springframework.web: WARN
-    com.thoughtmechanix: DEBUG
-    
+
+
     
 eureka:
   client:

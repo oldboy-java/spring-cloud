@@ -149,7 +149,7 @@
 
     <modules>
         <!--<module>authentication-service</module>-->
-        <module>confsvr</module>
+<!--        <module>confsvr</module>-->
         <!--<module>eurekasvr</module>-->
         <!--<module>licensing-service</module>-->
         <!--	<module>organization-service</module>

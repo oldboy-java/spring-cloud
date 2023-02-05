@@ -173,13 +173,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 ### 1、密码模式
 
 POST <br>
-`localhost:8080/oauth/token?grant_type=password&username=john.carnell&password=password1&scope=all&client_id=eagleeye&client_secret=thisissecret 
+`localhost:8080/uaa/oauth/token?grant_type=password&username=john.carnell&password=password1&scope=all&client_id=eagleeye&client_secret=thisissecret 
 `
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;其中
 grant_type=password
-username和password指定用户详情中指定的账号信息
-client_id和client_secret指定客户端详情中配置的客户端
+username和password指定用户详情中指定的账号信息  （t_user)
+client_id和client_secret指定客户端详情中配置的客户端  (oauth_client_details)
 
 &nbsp;&nbsp;&nbsp;&nbsp;响应结果<br>
 `{
@@ -192,10 +192,11 @@ client_id和client_secret指定客户端详情中配置的客户端
 
 &nbsp;&nbsp;&nbsp;&nbsp;此模式十分简单，但是却意味着直接将用户敏感信息泄漏给了client，因此这就说明这种模式只能用于client是我 们自己开发的情况下。因此密码模式一般用于我们自己开发的，第一方原生App或第一方单页面应用。
 
+
 ### 2、客户端模式
 
 POST <br>
-`localhost:8080/oauth/token?grant_type=client_credentials&scope=all&client_id=eagleeye&client_secret=thisissecret`
+`localhost:8080/uaa/oauth/token?grant_type=client_credentials&scope=all&client_id=eagleeye&client_secret=thisissecret`
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;其中
 client_id和client_secret指定客户端详情中配置的客户端
@@ -216,9 +217,9 @@ client_id和client_secret指定客户端详情中配置的客户端
 
 ### 3、授权码模式
 
-#### 3.1 发起/oauth/authorize请求
+#### 3.1 发起/uaa/oauth/authorize请求
 GET <br>
-`localhost:8080/oauth/authorize?client_id=eagleeye3&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+`localhost:8080/uaa/oauth/authorize?client_id=eagleeye3&response_type=code&scope=all&redirect_uri=http://www.baidu.com
 `
 
 #### 3.2 重定向到登录页面
@@ -228,7 +229,7 @@ GET <br>
 
 #### 3.3 使用授权码获取accessToken
 POST <br>
- `localhost:8080/oauth/token?grant_type=authorization_code&scope=all&client_id=eagleeye&client_secret=thisissecret&code=VfOGbZ&redirect_uri=http://www.baidu.com`
+ `localhost:8080/uaa/oauth/token?grant_type=authorization_code&scope=all&client_id=eagleeye&client_secret=thisissecret&code=VfOGbZ&redirect_uri=http://www.baidu.com`
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;响应结果<br>
@@ -245,7 +246,7 @@ POST <br>
 当使用密码模式时access_token过期后，可以使用refreshToken重新获取access_token
 
 POST
-`localhost:8080/oauth/token?grant_type=refresh_token&scope=all
+`localhost:8080/uaa/oauth/token?grant_type=refresh_token&scope=all
 &client_id=eagleeye&client_secret=thisissecret&refresh_token=14bbf37f-9445-4b17-baa9-12be6dd803f7`
 
 <br>
@@ -278,3 +279,6 @@ refresh_token：指定刷新token值
 public PasswordEncoder passwordEncoder(){
 return  NoOpPasswordEncoder.getInstance();
 }`
+
+
+###2、授权服务器同时也可以是资源服务器

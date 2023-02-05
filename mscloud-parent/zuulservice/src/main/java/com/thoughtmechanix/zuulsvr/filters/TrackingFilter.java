@@ -20,8 +20,6 @@ public class TrackingFilter extends ZuulFilter{
     @Autowired
     private FilterUtils filterUtils;
 
-    @Autowired
-//    private ServiceConfig serviceConfig;
 
     @Override
     public String filterType() {
@@ -33,6 +31,7 @@ public class TrackingFilter extends ZuulFilter{
         return FILTER_ORDER;    //指示不同类型的过滤器的执行顺序。譬如有多个前置过滤器，当前过滤器执行的顺序
     }
 
+    @Override
     public boolean shouldFilter() {
         return SHOULD_FILTER;    //返回布尔值，指示当前过滤器是否需要被执行
     }
@@ -49,6 +48,7 @@ public class TrackingFilter extends ZuulFilter{
         return java.util.UUID.randomUUID().toString();
     }
 
+    @Override
     public Object run() {
         if (isCorrelationIdPresent()) {
             logger.debug("tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
@@ -57,7 +57,6 @@ public class TrackingFilter extends ZuulFilter{
             filterUtils.setCorrelationId(generateCorrelationId());
             logger.debug("tmx-correlation-id generated in tracking filter: {}.", filterUtils.getCorrelationId());
         }
-
         return null;
     }
 }

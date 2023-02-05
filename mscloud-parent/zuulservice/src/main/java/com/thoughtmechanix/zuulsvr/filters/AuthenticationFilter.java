@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
 @Component
 public class AuthenticationFilter extends ZuulFilter {
     private static final int FILTER_ORDER =  2;

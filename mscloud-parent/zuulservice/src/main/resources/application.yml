@@ -1,0 +1,37 @@
+#Setting logging levels
+logging:
+    level:
+      com.netflix: WARN
+      org.springframework.web: WARN
+      com.thoughtmechanix: DEBUG
+
+
+#  ##使用静态URL配置
+#    dept:
+#      path: /consumer/**
+#      url: http://localhost
+#
+#     ##通过服务ID配置
+#    dept-consumer-feign:  #任意写
+#         path: /dept-consumer-feign/**
+#         serviceId: MSCLOUD-CONSUMER-DEPT-FEIGN
+
+
+
+hystrix: 
+  command: 
+    default:
+      execution:
+        timeout: 
+          enabled: true  #设置超时时间
+                          
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 100000
+            
+#暴露所有端点，其中管理zuul路由端点/routes,查看具体路由信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include:  "*"

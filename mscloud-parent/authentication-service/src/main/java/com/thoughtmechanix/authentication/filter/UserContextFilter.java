@@ -19,11 +19,8 @@ public class UserContextFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-
         System.out.println("****** I am entering the licensing service id with auth token: " + httpServletRequest.getHeader("Authorization"));
-
 
         UserContextHolder.getContext().setCorrelationId(  httpServletRequest.getHeader(UserContext.CORRELATION_ID) );
         UserContextHolder.getContext().setUserId( httpServletRequest.getHeader(UserContext.USER_ID) );

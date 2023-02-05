@@ -37,7 +37,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         remoteTokenServices.setClientId("eagleeye");
         remoteTokenServices.setClientSecret("thisissecret");
         // 设置token校验地址
-        remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
+        remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:8080/uaa/oauth/check_token");
         return remoteTokenServices;
     }
 
