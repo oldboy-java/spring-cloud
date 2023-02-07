@@ -23,7 +23,7 @@ public class MsCloudUserDetail implements UserDetails {
     private UserDTO userDTO;
 
     @Override
-    @JsonIgnore //忽略UserDetails中的authorities序列化redis
+//    @JsonIgnore //忽略UserDetails中的authorities序列化redis
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<String> authorities = userDTO.getAuthorities();
         if (!CollectionUtils.isEmpty(authorities)) {
@@ -39,7 +39,7 @@ public class MsCloudUserDetail implements UserDetails {
     }
 
     @Override
-    @JsonIgnore  //忽略UserDetails中的username序列化redis
+//    @JsonIgnore  //忽略UserDetails中的username序列化redis
     public String getUsername() {
         return userDTO.getUsername();
     }

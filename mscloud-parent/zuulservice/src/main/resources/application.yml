@@ -35,3 +35,5 @@ management:
     web:
       exposure:
         include:  "*"
+zuul:
+  sensitive-headers:    #所有请其他都传递

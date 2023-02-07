@@ -28,7 +28,8 @@ public class TrackingFilter extends ZuulFilter{
 
     @Override
     public int filterOrder() {
-        return FILTER_ORDER;    //指示不同类型的过滤器的执行顺序。譬如有多个前置过滤器，当前过滤器执行的顺序
+        //指示不同类型的过滤器的执行顺序。譬如有多个前置过滤器，当前过滤器执行的顺序越小，优先级越高，越先执行
+        return FILTER_ORDER;
     }
 
     @Override
@@ -40,7 +41,6 @@ public class TrackingFilter extends ZuulFilter{
       if (filterUtils.getCorrelationId() !=null){
           return true;
       }
-
       return false;
     }
 
@@ -50,6 +50,7 @@ public class TrackingFilter extends ZuulFilter{
 
     @Override
     public Object run() {
+        logger.debug("the current zuul filter is {}", this.getClass().toString());
         if (isCorrelationIdPresent()) {
             logger.debug("tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
         }

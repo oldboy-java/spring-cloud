@@ -21,4 +21,7 @@ public class UserDTO implements Serializable {
 
     // 权限编码集合
     private List<String> authorities;
+
+    // 用户所属组织
+    private String organizationId;
 }

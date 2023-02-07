@@ -28,9 +28,11 @@ public class MsCloudUserDetailService implements UserDetailsService {
 
         //获取权限
         List<String> permissions = userService.listPermissions(user.getId());
+
         UserDTO userDTO = UserDTO.builder().id(user.getId()).username(user.getUsername())
                 .authorities(permissions)
-                .fullname(user.getFullname()).mobile(user.getMobile()).password(user.getPassword()).build();
+                .fullname(user.getFullname()).mobile(user.getMobile()).password(user.getPassword())
+                .build();
         return new MsCloudUserDetail(userDTO);
     }
 }

@@ -14,10 +14,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * 认证过滤器（zuul前置过滤器）
+ */
 @Component
 public class AuthenticationFilter extends ZuulFilter {
     private static final int FILTER_ORDER =  2;
-    private static final boolean  SHOULD_FILTER=false;
+    private static final boolean  SHOULD_FILTER=true;
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
 
     @Autowired
@@ -28,7 +31,7 @@ public class AuthenticationFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return filterUtils.PRE_FILTER_TYPE;
+        return FilterUtils.PRE_FILTER_TYPE;
     }
 
     @Override
@@ -45,7 +48,6 @@ public class AuthenticationFilter extends ZuulFilter {
         if (filterUtils.getAuthToken() !=null){
             return true;
         }
-
         return false;
     }
 
@@ -54,24 +56,22 @@ public class AuthenticationFilter extends ZuulFilter {
         try {
             restExchange =
                     restTemplate.exchange(
-                            "http://authenticationservice/v1/validate/{token}",
+                            "http://authenticationservice/uaa/oauth/user",
                             HttpMethod.GET,
-                            null, UserInfo.class, filterUtils.getAuthToken());
+                            null, UserInfo.class);
         }
         catch(HttpClientErrorException ex){
             if (ex.getStatusCode()==HttpStatus.UNAUTHORIZED) {
                 return null;
             }
-
             throw ex;
         }
-
-
         return restExchange.getBody();
     }
 
     @Override
     public Object run() {
+        logger.debug("the current zuul filter is {}", this.getClass().toString());
         RequestContext ctx = RequestContext.getCurrentContext();
 
         //If we are dealing with a call to the authentication service, let the call go through without authenticating
@@ -83,25 +83,20 @@ public class AuthenticationFilter extends ZuulFilter {
            logger.debug("Authentication token is present.");
         }else{
             logger.debug("Authentication token is not present.");
-
             ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
             ctx.setSendZuulResponse(false);
         }
 
         UserInfo userInfo = isAuthTokenValid();
         if (userInfo!=null){
-            filterUtils.setUserId(userInfo.getUserId());
             filterUtils.setOrgId(userInfo.getOrganizationId());
-
-           logger.debug("Authentication token is valid.");
+            filterUtils.setUserId(userInfo.getId()+"");
+            logger.debug("Authentication token is valid.");
             return null;
         }
-
         logger.debug("Authentication token is not valid.");
         ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         ctx.setSendZuulResponse(false);
-
         return null;
-
     }
 }

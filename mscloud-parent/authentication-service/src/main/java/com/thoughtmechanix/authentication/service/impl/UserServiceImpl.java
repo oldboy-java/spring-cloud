@@ -33,5 +33,4 @@ public class UserServiceImpl  extends ServiceImpl<UserMapper, UserEntity> implem
         return userMapper.listPermissionsByUserId(id);
     }
 
-
 }

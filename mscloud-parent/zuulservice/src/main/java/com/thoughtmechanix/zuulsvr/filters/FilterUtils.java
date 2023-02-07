@@ -16,7 +16,6 @@ public class FilterUtils {
 
     public String getCorrelationId(){
         RequestContext ctx = RequestContext.getCurrentContext();
-
         if (ctx.getRequest().getHeader(CORRELATION_ID) !=null) {
             return ctx.getRequest().getHeader(CORRELATION_ID);
         }
@@ -25,6 +24,10 @@ public class FilterUtils {
         }
     }
 
+    /**
+     * 设置zuul请求头 addZuulRequestHeader
+     * @param correlationId
+     */
     public void setCorrelationId(String correlationId){
         RequestContext ctx = RequestContext.getCurrentContext();
         ctx.addZuulRequestHeader(CORRELATION_ID, correlationId);

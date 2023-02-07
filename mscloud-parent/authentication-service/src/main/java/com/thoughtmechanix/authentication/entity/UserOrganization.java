@@ -7,13 +7,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 
-@TableName(value = "user_orgs")
+@TableName(value = "t_user_orgs")
 @Data
 public class UserOrganization implements Serializable {
     @TableField(value = "organization_id")
     String organizationId;
 
-    @TableField(value = "user_name" )
-    String userName;
+    @TableField(value = "user_id" )
+    Long userId;
 
 }

@@ -1,23 +1,27 @@
 package com.thoughtmechanix.zuulsvr.model;
 
-public class UserInfo {
-    String organizationId;
-    String userId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String getOrganizationId() {
-        return this.organizationId;
-    }
+import java.io.Serializable;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserInfo implements Serializable {
+    private Long id;
+    private String username;
+    private String password;
+    private String fullname;
+    private String mobile;
 
-    public void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
-    }
+    // 权限编码集合
+    private List<String> authorities;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    // 用户所属组织
+    private String organizationId;
 }
