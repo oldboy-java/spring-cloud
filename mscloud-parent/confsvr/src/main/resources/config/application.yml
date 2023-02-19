@@ -1,0 +1,27 @@
+
+#Setting the logging levels for the service
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+    org.springframework.security: DEBUG
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+
+##使用配置来配置资源服务器相关配置 OAuth2ResourceServerConfiguration、ResourceServerProperties
+security:
+  oauth2:
+    resource:
+      id: orgnazationservice
+      token-info-uri: http://localhost:8080/uaa/oauth/check_token #RemoteTokenServices
+      user-info-uri: http://localhost:8080/uaa/oauth/user    #对应UserInfoTokenServices
+      prefer-token-info: true  #是否优先使用token-info-uri

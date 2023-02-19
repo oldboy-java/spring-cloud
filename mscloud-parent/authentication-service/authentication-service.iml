@@ -158,15 +158,15 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-jwt:1.1.1.RELEASE" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.jaxb:jaxb-runtime:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.jaxb:txw2:2.3.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.istack:istack-commons-runtime:3.0.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.activation:jakarta.activation:1.2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-jwt:1.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-rsa:1.0.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.64" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.64" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-rsa:1.0.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-boot-starter:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.baomidou:mybatis-plus-support:2.3.2" level="project" />

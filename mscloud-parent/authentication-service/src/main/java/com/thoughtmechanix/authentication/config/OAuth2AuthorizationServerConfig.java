@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeSe
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
@@ -59,7 +59,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         // 使用数据库存储授权码
         JdbcAuthorizationCodeServices  jdbcAuthorizationCodeServices = new JdbcAuthorizationCodeServices(dataSource);
         return jdbcAuthorizationCodeServices;
-
     }
 
     /**
@@ -156,12 +155,12 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
        // return new InMemoryTokenStore();
 
         // 方式二、使用数据库存储token
-//        JdbcTokenStore jdbcTokenStore = new JdbcTokenStore(dataSource);
-//        return jdbcTokenStore;
+        JdbcTokenStore jdbcTokenStore = new JdbcTokenStore(dataSource);
+        return jdbcTokenStore;
 
         // 方式三、使用redis存储
-        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
-        return redisTokenStore;
+//        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+//        return redisTokenStore;
     }
 
     /**
@@ -179,9 +178,9 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         service.setSupportRefreshToken(true);
         //设置token存储方式
         service.setTokenStore(tokenStore());
-        // 令牌默认有效期12小时
+        // 如果ClientDetails（表oauth_client_details）中未设置，则使用本设置，且默认令牌默认有效期12小时
         service.setAccessTokenValiditySeconds(12*60*60);
-        // 刷新令牌默认有效期30天
+        // 如果ClientDetails（表oauth_client_details）中未设置，则使用本设置，刷新令牌默认有效期30天
         service.setRefreshTokenValiditySeconds(30*24*60*60);
         return service;
     }

@@ -3,7 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
     <parent>
         <groupId>com.tk</groupId>
         <artifactId>mscloud-parent</artifactId>
@@ -11,7 +10,6 @@
     </parent>
 
     <artifactId>authentication-service</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -64,17 +62,17 @@
             <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
 
-        <!-- 配置oauth2-->
+        <!-- 配置oauth2：spring-cloud-starter-security、 spring- security-oauth2和spring-security-jwt这3个起步依赖的整合-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
 
         <!-- 配置jwt -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-jwt</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-jwt</artifactId>-->
+<!--        </dependency>-->
 
 
         <dependency>

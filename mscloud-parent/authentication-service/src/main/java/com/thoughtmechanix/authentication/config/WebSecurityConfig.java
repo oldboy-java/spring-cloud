@@ -1,6 +1,5 @@
 package com.thoughtmechanix.authentication.config;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,20 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * 使用内存管理用户详情信息
-     * @param auth
-     */
-    @SneakyThrows
-    private void buildMemoryAuthentication(AuthenticationManagerBuilder auth){
-        auth
-                .inMemoryAuthentication()
-                .withUser("john.carnell").password("password1").roles("USER")
-                .and()
-                .withUser("william.woodward").password("password2").roles("USER", "ADMIN");
-    }
-
-
-    /**
      * 配置使用明文验证密码
      * @return
      */
@@ -94,10 +79,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable()
              .authorizeRequests()
-               .antMatchers("/r/r1").hasAuthority("p1")
+               .antMatchers("/oauth/**").permitAll()
                // 客户端操作放行
-               .antMatchers("/clients/**","/login/**","/logout/**","/actuator/**","/oauth/user")
-               .permitAll()
+               .antMatchers("/clients/**","/login","/logout","/actuator/**","/error").permitAll()
                .anyRequest().authenticated()
                // 必须加上formLogin，不然授权码模式报403
                .and()

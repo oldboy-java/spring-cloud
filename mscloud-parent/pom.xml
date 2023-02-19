@@ -30,8 +30,8 @@
     </properties>
 
 
+    <!--定义依赖管理 -->
     <dependencyManagement>
-
         <dependencies>
             <!-- 定义spring-cloud -->
             <dependency>

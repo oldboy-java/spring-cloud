@@ -48,7 +48,6 @@
         </dependency>
 
 
-
         <!-- 使用eureka-client发现服务 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -103,8 +102,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
-
     </dependencies>
 
 </project>

@@ -39,7 +39,7 @@ spring:
      config:
        server:
            native:
-              searchLocations: classpath:config/licensingservice,classpath:config/licensingservice,classpath:config/authenticationservice,classpath:config/organizationservice,,classpath:config/zuulservice
+              searchLocations: classpath:config
 
 
 

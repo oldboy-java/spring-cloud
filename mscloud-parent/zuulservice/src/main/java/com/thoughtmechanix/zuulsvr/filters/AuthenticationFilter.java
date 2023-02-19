@@ -10,14 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * 认证过滤器（zuul前置过滤器）
  */
-@Component
+//@Component
 public class AuthenticationFilter extends ZuulFilter {
     private static final int FILTER_ORDER =  2;
     private static final boolean  SHOULD_FILTER=true;

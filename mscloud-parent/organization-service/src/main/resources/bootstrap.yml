@@ -8,7 +8,9 @@ spring:
     config:
       enabled: true
       uri: http://localhost:18888
-
+      fail-fast: true   #连接不上配置中心，快速失败
+  main:
+      allow-bean-definition-overriding: true
 eureka:
   instance:
     preferIpAddress: true

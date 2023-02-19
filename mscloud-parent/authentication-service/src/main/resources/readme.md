@@ -99,6 +99,16 @@ create table oauth_refresh_token
 | additional_information  | 这是一个预留的字段,在Oauth的流程中没有实际的使用,可选,但若设置值,必须是JSON格式的数据,如:{“country”:“CN”,“country_code”:“086”}按照spring-security-oauth项目中对该字段的描述 Additional information for this client, not need by the vanilla OAuth protocolbut might be useful, for example,for storing descriptive information. (详见ClientDetails.java的getAdditionalInformation()方法的注释)在实际应用中, 可以用该字段来存储关于客户端的一些其他信息,如客户端的国家,地区,注册时的IP地址等等.create_time数据的创建时间,精确到秒,由数据库在插入数据时取当前系统时间自动生成(扩展字段) |
 | autoapprove             | 设置用户是否自动Approval操作, 默认值为 ‘false’, 可选值包括 ‘true’,‘false’, ‘read’,‘write’. 该字段只适用于grant_type="authorization_code"的情况,当用户登录成功后,若该值为’true’或支持的scope值,则会跳过用户Approve的页面, 直接授权. 该字段与 trusted 有类似的功能, 是spring-security-oauth2 的 2.0 版本后添加的新属性. 在项目中,主要操作oauth_client_details表的类是JdbcClientDetailsService.java, 更多的细节请参考该类. 也可以根据实际的需要,去扩展或修改该类的实现 |
 
+
+<p>
+ resource_ids 必须设置所有能够访问资源的集合，说明通过该客户端申请的token可以访问的资源。
+ 后续每个资源服务必须设置一个资源ID，resource_ids来自这些资源服务的ID
+ 当访问资源服务时，资源服务会将当前资源服务的客户端配置信息和接受到的token请求授权服务验证
+ 验证时会验证，当前token可访问的资源列表中是否包含当前资源服务ID，如果不含会提示token不包含当前资源ID则抛异常.
+ </p>
+
+
+
 ### oauth_access_token（访问令牌）
 
      对`oauth_access_token`表的操作主要集中在`JdbcTokenStore.java`中
@@ -146,14 +156,14 @@ create table oauth_refresh_token
 
 # 二、授权服务器配置
 
-### 1、 启用授权服务器功能
+1、启用授权服务器功能
 
-### 2、配置客户端详情
+2、配置客户端详情
 
-### 3、配置管理令牌服务和令牌端点的安全约束
+3、配置管理令牌服务和令牌端点的安全约束
 
-    .pathMapping("/oauth/token","/abc/oauth/token")
-则获取token请求地址为:contextPath + /abc/oauth/token
+    .pathMapping("/oauth/token","/abc/oauth/token") ##则获取token请求地址为:contextPath + /abc/oauth/token
+
 <br>
     以上3步通过继承AuthorizationServerConfigurerAdapter进行配置
 
@@ -161,23 +171,21 @@ create table oauth_refresh_token
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 //略...
 }`
-<hr>
 
-### 4、Web安全配置
- 继承WebSecurityConfigurerAdapter进行配置
+4、Web安全配置
+继承WebSecurityConfigurerAdapter进行配置
 
-<hr>
+
 
 
 # 三、授权模式验证
 ### 1、密码模式
 
 POST <br>
-`localhost:8080/uaa/oauth/token?grant_type=password&username=john.carnell&password=password1&scope=all&client_id=eagleeye&client_secret=thisissecret 
+`localhost:8080/uaa/oauth/token?grant_type=password&username=john.carnell&password=password1&scope=all&client_id=eagleeye&client_secret=thisissecret
 `
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;其中
-grant_type=password
+&nbsp;&nbsp;&nbsp;&nbsp;其中grant_type=password
 username和password指定用户详情中指定的账号信息  （t_user)
 client_id和client_secret指定客户端详情中配置的客户端  (oauth_client_details)
 
@@ -190,8 +198,10 @@ client_id和client_secret指定客户端详情中配置的客户端  (oauth_clie
 "scope": "all"
 }`
 
-&nbsp;&nbsp;&nbsp;&nbsp;此模式十分简单，但是却意味着直接将用户敏感信息泄漏给了client，因此这就说明这种模式只能用于client是我 们自己开发的情况下。因此密码模式一般用于我们自己开发的，第一方原生App或第一方单页面应用。
-
+<p>此模式十分简单，但是却意味着直接将用户敏感信息泄漏给了client，
+因此这就说明这种模式只能用于client是我 们自己开发的情况下。因此密码模式一般用于我们自己开发的，
+第一方原生App或第一方单页面应用。 <b>密码模式支持刷新令牌</b>。
+</p>
 
 ### 2、客户端模式
 
@@ -211,6 +221,7 @@ client_id和client_secret指定客户端详情中配置的客户端
 
 &nbsp;&nbsp;&nbsp;&nbsp;此模式是最方便但最不安全的模式。因此这就要求我们对client完全的信任，
 而client本身也是安全的。因 此这种模式一般用来提供给我们完全信任的服务器端服务。
+客户端模式不支持刷新令牌
 比如，<b>合作方系统对接，拉取一组用户信息</b>。
 
 
@@ -224,12 +235,12 @@ GET <br>
 
 #### 3.2 重定向到登录页面
 
- 输入正确的账号和密码，页面重定向https://www.baidu.com/?code=VfOGbZ
+输入正确的账号和密码，页面重定向https://www.baidu.com/?code=VfOGbZ
 
 
 #### 3.3 使用授权码获取accessToken
 POST <br>
- `localhost:8080/uaa/oauth/token?grant_type=authorization_code&scope=all&client_id=eagleeye&client_secret=thisissecret&code=VfOGbZ&redirect_uri=http://www.baidu.com`
+`localhost:8080/uaa/oauth/token?grant_type=authorization_code&scope=all&client_id=eagleeye&client_secret=thisissecret&code=VfOGbZ&redirect_uri=http://www.baidu.com`
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;响应结果<br>
@@ -241,9 +252,10 @@ POST <br>
 "scope": "all"
 }
 `
+<br>授权码模式支持刷新令牌</br>
 
 ### 四、oauth2如何refreshToken
-当使用密码模式时access_token过期后，可以使用refreshToken重新获取access_token
+当使用密码模式（授权码模式）时access_token过期后，可以使用refreshToken重新获取access_token
 
 POST
 `localhost:8080/uaa/oauth/token?grant_type=refresh_token&scope=all
@@ -269,16 +281,17 @@ refresh_token：指定刷新token值
 # 五、问题汇总
 ### 1、There is no PasswordEncoder mapped for the id "null"
 在Spring Security 5.0之前，PasswordEncoder 的默认值为 NoOpPasswordEncoder 既表示为纯文本密码
-在 Spring Security 5.0.x 以后，密码的一般格式为：{ID} encodedPassword ，ID 主要用于查找 PasswordEncoder 对应的编码标识符，并且encodedPassword 是所选的原始编码密码 PasswordEncoder。ID 必须书写在密码的前面，开始用{，和 结束 }。如果 ID 找不到，ID 则为null
+在 Spring Security 5.0.x 以后，密码的一般格式为：{ID} encodedPassword ，ID 主要用于查找 PasswordEncoder 对应的编码标识符，
+并且encodedPassword 是所选的原始编码密码 PasswordEncoder。ID 必须书写在密码的前面，开始用{，和 结束 }。如果 ID 找不到，ID 则为null
 
 `/**
- * 配置使用明文验证密码
+* 配置使用明文验证密码
 * @return
-*/
-@Bean
-public PasswordEncoder passwordEncoder(){
-return  NoOpPasswordEncoder.getInstance();
-}`
+  */
+  @Bean
+  public PasswordEncoder passwordEncoder(){
+  return  NoOpPasswordEncoder.getInstance();
+  }`
 
 
-###2、授权服务器同时也可以是资源服务器
+### 2、授权服务器同时也可以是资源服务器
