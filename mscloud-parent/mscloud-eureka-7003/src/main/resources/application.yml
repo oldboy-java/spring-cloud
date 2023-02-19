@@ -1,0 +1,10 @@
+server:
+  port: 7003
+  
+eureka:
+  client:
+    register-with-eureka: false #是否需要将自己注册到Eureka服务中，false表示不向注册中心注册自己。
+    fetch-registry: false  #是否需要从Eureka中获取注册信息 ，false不需要
+    service-url:
+     #单机 defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka  #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+     defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #配置集群中的其他节点 
