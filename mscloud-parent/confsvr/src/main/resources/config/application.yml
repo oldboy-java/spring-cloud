@@ -14,7 +14,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 1000
 
 
 ##使用配置来配置资源服务器相关配置 OAuth2ResourceServerConfiguration、ResourceServerProperties

@@ -230,13 +230,22 @@ client_id和client_secret指定客户端详情中配置的客户端
 
 #### 3.1 发起/uaa/oauth/authorize请求
 GET <br>
-`localhost:8080/uaa/oauth/authorize?client_id=eagleeye3&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+`localhost:8080/uaa/oauth/authorize?client_id=eagleeye3&response_type=code&scope=all&redirect_uri=http://www.baidu.com&state=XX
 `
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;其中
+response_type：这是告诉授权服务器，返回类型，code表示授权码授权。
+client_id：应用程序的公共标识符。
+redirect_uri：告诉授权服务器在用户批准授权后，将获取的Code发送到哪里。
+scope：应用授权作用域（如微信，当scope=snsapi_base时，只能获取用户的openId。当scope=snsapi_userinfo时，可以获取昵称、性别、所在地）。
+state：应用程序传递的一个随机数，用来防止CSRF攻击。防止攻击者利用客户端向授权服务器发送恶意请求。需要验证下state值，防止攻击
 
 #### 3.2 重定向到登录页面
 
-输入正确的账号和密码，页面重定向https://www.baidu.com/?code=VfOGbZ
+输入正确的账号和密码，页面302重定向https://www.baidu.com/?code=VfOGbZ
 
+code是一次性的
 
 #### 3.3 使用授权码获取accessToken
 POST <br>

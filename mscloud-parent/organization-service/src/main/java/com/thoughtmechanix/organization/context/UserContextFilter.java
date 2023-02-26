@@ -1,8 +1,7 @@
-package com.thoughtmechanix.organization.utils;
+package com.thoughtmechanix.organization.context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,12 +22,16 @@ public class UserContextFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        UserContextHolder.getContext().setCorrelationId(  httpServletRequest.getHeader(UserContext.CORRELATION_ID) );
-        UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
-        UserContextHolder.getContext().setAuthToken(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
-        UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
+        String correlationId = httpServletRequest.getHeader(UserContext.CORRELATION_ID);
+        String userId = httpServletRequest.getHeader(UserContext.USER_ID);
+        String authToken = httpServletRequest.getHeader(UserContext.AUTH_TOKEN);
+        String orgId = httpServletRequest.getHeader(UserContext.ORG_ID);
 
-        logger.debug("UserContextFilter Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        logger.info("correlationId={},userId={},authToken={},orgId={}", correlationId, userId,authToken, orgId);
+        UserContextHolder.getContext().setCorrelationId(correlationId);
+        UserContextHolder.getContext().setUserId(userId);
+        UserContextHolder.getContext().setAuthToken(authToken);
+        UserContextHolder.getContext().setOrgId(orgId);
 
         filterChain.doFilter(httpServletRequest, servletResponse);
     }

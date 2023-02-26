@@ -1,6 +1,6 @@
 package com.thoughtmechanix.licenses;
 
-import com.thoughtmechanix.licenses.utils.UserContextInterceptor;
+import com.thoughtmechanix.licenses.context.UserContextInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;

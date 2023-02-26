@@ -5,6 +5,7 @@ import com.thoughtmechanix.licenses.service.LicenseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,7 @@ public class LicenseServiceController {
     }
 
     @RequestMapping(value="/",method = RequestMethod.POST)
+    @PreAuthorize("#oauth2.hasScope('license:save')")  //增加scope验证，需要再注册客户端时设置客户端可访问的scope
     public void saveLicenses(@RequestBody License license) {
         licenseService.saveLicense(license);
     }

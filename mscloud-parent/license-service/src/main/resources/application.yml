@@ -1,4 +1,3 @@
-
-
-
-
+feign:
+  hystrix:
+    enabled:  true   #启用feign的hystrix支持后，对feign的调用是子线程中执行

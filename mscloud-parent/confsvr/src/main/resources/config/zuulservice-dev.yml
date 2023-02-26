@@ -1,12 +1,3 @@
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 20000
-
 ribbon:
   ReadTimeout: 20000
   ConnectTimeout: 20000
@@ -30,6 +21,7 @@ zuul:
       path: /organization/**
       serviceId: organizationservice
       sensitiveHeaders:
+
     license-service:
       path: /licenses/**
       serviceId: licenseservice

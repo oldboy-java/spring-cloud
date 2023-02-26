@@ -109,13 +109,13 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 //设置授权类型：用逗号隔开，支持多种授权类型
                 .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token")
                 //用来限制客户端的访问范围，如果为空（默认）的话，那么客户端拥有全部的访问范围
-                //设置作用域：自定义的字符串如all，read_userinfo等
-                .scopes("all")
+                //设置作用域：自定义的字符串如org:write，admin:org等
+                .scopes("org:write","admin:org")
 
-                //是否自动授权 false：不自动授权，会跳转到授权页面  true:直接颁发令牌
+                //是否自动授权 false：不自动授权，会跳转到授权页面  true:直接颁发令牌  (针对授权码模式有效)
                 .autoApprove(false)
 
-                // 验证回调地址
+                // 验证回调地址  （授权码模式有效）
                 .redirectUris("http://www.baidu.com")
 
 

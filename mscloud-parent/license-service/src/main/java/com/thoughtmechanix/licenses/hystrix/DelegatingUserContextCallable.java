@@ -2,8 +2,8 @@ package com.thoughtmechanix.licenses.hystrix;
 
 
 
-import com.thoughtmechanix.licenses.utils.UserContext;
-import com.thoughtmechanix.licenses.utils.UserContextHolder;
+import com.thoughtmechanix.licenses.context.UserContext;
+import com.thoughtmechanix.licenses.context.UserContextHolder;
 
 import java.util.concurrent.Callable;
 

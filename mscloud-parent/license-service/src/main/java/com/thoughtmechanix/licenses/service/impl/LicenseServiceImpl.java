@@ -10,7 +10,6 @@ import com.thoughtmechanix.licenses.mapper.LicenseMapper;
 import com.thoughtmechanix.licenses.model.License;
 import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.service.LicenseService;
-import com.thoughtmechanix.licenses.utils.UserContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +32,54 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
     @Autowired
     HttpServletRequest request;
 
+//    /**
+//     * 使用RestTemplate发送请求，设置HystrixCommand进行断路处理
+//     * @param organizationId
+//     * @param licenseId
+//     * @return
+//     */
+//    @HystrixCommand(
+//            threadPoolKey = "OrgThreadPool",
+//            threadPoolProperties =
+//                    {@HystrixProperty(name = "coreSize",value="30"),
+//                            @HystrixProperty(name="maxQueueSize", value="10"),
+//                    },
+//            commandProperties={
+//                    @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),
+//                    @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="75"),
+//                    @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="7000"),
+//                    @HystrixProperty(name="metrics.rollingStats.timeInMilliseconds", value="15000"),
+//                    @HystrixProperty(name="metrics.rollingStats.numBuckets", value="5")}
+//    )
+//    @Override
+//    public License getLicense(String organizationId,String licenseId) {
+//        EntityWrapper<License> wrapper = new EntityWrapper<>();
+//        wrapper.eq("license_id", licenseId);
+//        wrapper.eq("organization_id", organizationId);
+//        License license = selectOne(wrapper);
+//        Organization org = organizationRestClient.getOrganization(organizationId);
+//        return license
+//                .withOrganizationName( org.getName())
+//                .withContactName( org.getContactName())
+//                .withContactEmail( org.getContactEmail() )
+//                .withContactPhone( org.getContactPhone() );
+//    }
+
+
+    /**
+     * 使用feign调用远程接口，并配置feign:hystrix.enabled=true 启用feign的hystrix支持后，对feign的调用是子线程中执行。
+     *  需要通过自定义HystrixConcurrencyStrategy，手动将主线程上下文中的信息设置到Hystrix子线程中
+     * @param organizationId
+     * @param licenseId
+     * @return
+     */
     @Override
     public License getLicense(String organizationId,String licenseId) {
-        log.info("token={}", request.getHeader(UserContext.AUTH_TOKEN));
         EntityWrapper<License> wrapper = new EntityWrapper<>();
         wrapper.eq("license_id", licenseId);
         wrapper.eq("organization_id", organizationId);
         License license = selectOne(wrapper);
-        Organization org = getOrganization(organizationId);
+        Organization org = organizationFeignClient.getOrganization(organizationId);
         return license
                 .withOrganizationName( org.getName())
                 .withContactName( org.getContactName())
@@ -48,11 +87,7 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
                 .withContactPhone( org.getContactPhone() );
     }
 
-//    @HystrixCommand
-    private Organization getOrganization(String organizationId) {
-//        return organizationRestClient.getOrganization(organizationId);
-        return organizationFeignClient.getOrganization(organizationId);
-    }
+
 
     private void randomlyRunLong(){
         Random rand = new Random();
@@ -64,7 +99,7 @@ public class LicenseServiceImpl extends ServiceImpl<LicenseMapper, License> impl
 
     private void sleep(){
         try {
-            Thread.sleep(2000);
+            Thread.sleep(7000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

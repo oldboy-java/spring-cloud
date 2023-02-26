@@ -1,12 +1,3 @@
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 20000
-
 ribbon:
   ReadTimeout: 20000
   ConnectTimeout: 20000
@@ -16,8 +7,8 @@ zuul:
   prefix: /api
   strip-prefix: true
   host:
-    connect-timeout-millis: 40000
-    socket-timeout-millis: 40000
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
 
   routes:
     authentication-service:
